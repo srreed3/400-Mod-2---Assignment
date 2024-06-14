@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             html += '<thead><tr><th>DATE</th><th>TYPE</th><th>AMOUNT ($)</th><th>DESCRIPTION</th><th>DELETE</th></tr></thead>';
             html += '<tbody>';
             expenseEntries.forEach((expense, index) => {
-                html += `<tr><td>${expense.dateExpense}</td><td>${expense.typeExpense}</td><td>${expense.numAmount}</td><td>${expense.description}</td><td>${createDeleteButton(index).outerHTML}</td></tr>`;
+                html += `<tr><td>${expense.dateExpense}</td><td>${expense.typeExpense}</td><td>${expense.numAmount}</td><td>${expense.description}</td><td><button onclick="deleteExpense(${index})">X</button></td></tr>`;
             });
             html += '<div class="clearButton">'
             html += '<button onclick="clearAllExpenses()">CLEAR ALL EXPENSES</button>'
@@ -72,27 +72,19 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('output').innerHTML = html;
     }
 
-
-    //function to create delete button and add event listener                                               !!!not working yet!!!                
-    function createDeleteButton(index) {
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = () => deleteExpense(index);
-        return deleteButton;
-    }
-    
     //function to remove expense and update the table
-    function deleteExpense(index) {
+    window.deleteExpense = function(index) {
         expenseEntries.splice(index, 1);
         displayResults();
     }
 
 
-
-
-
-
-
+    //function to clear all expenses w/ button 
+    window.clearAllExpenses = function() {
+        document.getElementById('formContainer').reset();
+        expenseEntries = [];
+        document.getElementById('output').innerHTML = '';
+    }
 
     //function to clear all expenses w/ button 
     window.clearAllExpenses = function() {
